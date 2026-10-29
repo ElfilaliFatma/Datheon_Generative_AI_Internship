@@ -46,7 +46,9 @@ and invoice documents.
 - Clear, typed errors with safe messages that exclude API keys and document text.
 - UTF-8 file input, interactive paste input, terminal output, and JSON file output.
 - Atomic JSON writes with a parse check before saving.
-- 103 offline automated tests; no test uses a real API key or network call.
+- 106 offline automated tests; no test uses a real API key or network call.
+  Tests ignore any local `.env`, so they pass on a fresh clone and on a
+  configured machine alike.
 
 ## 4. Architecture and data flow
 
@@ -299,7 +301,7 @@ python -m pytest tests\test_schemas.py -q
 ```
 
 Tests are fully offline. Provider SDK clients are replaced with stubs or patched
-methods; no API key is read and no request is sent. Expected: `103 passed`.
+methods; no API key is read and no request is sent. Expected: `106 passed`.
 
 To see the CLI help:
 
@@ -313,6 +315,7 @@ python main.py --help
 | --- | --- |
 | `Configuration error: LLM_PROVIDER is not set` | Copy `.env.example` to `.env` and set `LLM_PROVIDER`. |
 | `Configuration error: GEMINI_API_KEY is not set` | Set the key for the **selected** provider. |
+| `GEMINI_API_KEY still contains the placeholder value` | You copied `.env.example` but did not replace the key. Paste a real key or remove `.env` entirely. |
 | `LLM_PROVIDER must be either 'gemini' or 'openai'` | Fix the typo; other providers are not supported. |
 | `Gemini authentication or permission failed` | Key is invalid, restricted, or lacks access to the model. |
 | `OpenAI authentication failed` | Check `OPENAI_API_KEY` and that it belongs to the intended project. |
