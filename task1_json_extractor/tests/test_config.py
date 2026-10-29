@@ -2,14 +2,23 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
+import config as config_module
 from config import Settings
 from exceptions import ConfigurationError
 
 
 @pytest.fixture(autouse=True)
-def clean_env(monkeypatch: pytest.MonkeyPatch) -> None:
+def clean_env(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Ignore any developer .env so tests never depend on local values."""
+    monkeypatch.setattr(
+        config_module, "ENV_FILE", tmp_path / "no-such-file.env"
+    )
     for name in (
         "LLM_PROVIDER",
         "GEMINI_API_KEY",
@@ -72,6 +81,20 @@ def test_blank_api_key_is_rejected(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("GEMINI_API_KEY", "   ")
 
     with pytest.raises(ConfigurationError, match="GEMINI_API_KEY"):
+        Settings.from_env()
+
+
+@pytest.mark.parametrize(
+    "placeholder",
+    ["your_gemini_api_key_here", "YOUR_OPENAI_API_KEY_HERE", "changeme"],
+)
+def test_placeholder_api_key_is_rejected(
+    monkeypatch: pytest.MonkeyPatch, placeholder: str
+) -> None:
+    monkeypatch.setenv("LLM_PROVIDER", "gemini")
+    monkeypatch.setenv("GEMINI_API_KEY", placeholder)
+
+    with pytest.raises(ConfigurationError, match="placeholder"):
         Settings.from_env()
 
 

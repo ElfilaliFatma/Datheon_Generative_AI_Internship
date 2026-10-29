@@ -14,7 +14,18 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from config import Settings  # noqa: E402
+import config as config_module  # noqa: E402
 from schemas import InvoiceExtraction, ResumeExtraction  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def isolate_dotenv(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Prevent a developer's local .env from influencing any test."""
+    monkeypatch.setattr(
+        config_module, "ENV_FILE", tmp_path / "absent-dotenv-file"
+    )
 
 
 @pytest.fixture

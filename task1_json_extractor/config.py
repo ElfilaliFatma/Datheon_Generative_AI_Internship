@@ -32,6 +32,13 @@ MODEL_ENV_VARS: dict[Provider, str] = {
 
 ENV_FILE = Path(__file__).resolve().parent / ".env"
 _MODEL_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:/-]{0,127}$")
+_PLACEHOLDER_SECRETS = {
+    "your_gemini_api_key_here",
+    "your_openai_api_key_here",
+    "your_api_key_here",
+    "replace_me",
+    "changeme",
+}
 
 
 @dataclass(frozen=True, slots=True)
@@ -87,6 +94,11 @@ class Settings:
             raise ConfigurationError(
                 f"{key_env_var} is not set. Configure the API key for the "
                 f"selected provider ({provider}) in .env or the environment."
+            )
+        if api_key.casefold() in _PLACEHOLDER_SECRETS:
+            raise ConfigurationError(
+                f"{key_env_var} still contains the placeholder value from "
+                ".env.example. Replace it with a real API key or unset it."
             )
 
         model_env_var = MODEL_ENV_VARS[provider]
