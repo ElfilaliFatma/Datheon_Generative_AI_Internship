@@ -142,7 +142,7 @@ Gemini:
 ```dotenv
 LLM_PROVIDER=gemini
 GEMINI_API_KEY=your_gemini_api_key_here
-GEMINI_MODEL=gemini-3.6-flash
+GEMINI_MODEL=gemini-3.5-flash
 ```
 
 OpenAI:
@@ -275,7 +275,7 @@ JSON only when no `--output` path is supplied; with `--output`, the validated
 JSON is written to the file instead:
 
 ```text
-Extraction succeeded (gemini, model=gemini-3.6-flash, attempts=1).
+Extraction succeeded (gemini, model=gemini-3.5-flash, attempts=1).
 Summary: invoice: line_items=3, total=323.88, currency=GBP
 
 {
@@ -351,10 +351,15 @@ python main.py --help
 
 ## 16. Limitations
 
-- Live Gemini and OpenAI calls were **not** executed during development here;
-  no real API key was available and no external call was authorized. Provider
-  integration is verified through mocked SDK tests and offline schema
-  compatibility checks only.
+- Live **Gemini** extraction was executed against `examples/sample_resume.txt`
+  and `examples/sample_invoice.txt` using `gemini-3.5-flash`: both produced
+  schema-valid JSON. Live **OpenAI** calls were not executed; the OpenAI path is
+  verified through mocked SDK tests and offline schema compatibility checks.
+- Google retires models for new accounts. `gemini-2.5-flash` and
+  `gemini-2.5-pro` now return HTTP 404 ("no longer available to new users").
+  The application surfaces Google's explanation, and you can switch models with
+  `GEMINI_MODEL`. If a model returns HTTP 503 ("high demand"), retry later or
+  choose another current model.
 - Results depend on model quality. The app validates structure and types, not
   factual correctness of every extracted value.
 - Dates are stored as strings. Partial dates (for example `2021`) are preserved

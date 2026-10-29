@@ -18,7 +18,7 @@ Provider = Literal["gemini", "openai"]
 
 SUPPORTED_PROVIDERS: tuple[Provider, ...] = ("gemini", "openai")
 DEFAULT_MODELS: dict[Provider, str] = {
-    "gemini": "gemini-3.6-flash",
+    "gemini": "gemini-3.5-flash",
     "openai": "gpt-4o-mini",
 }
 API_KEY_ENV_VARS: dict[Provider, str] = {

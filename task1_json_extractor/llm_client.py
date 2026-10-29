@@ -63,7 +63,12 @@ class GeminiClient:
                 api_key=settings.api_key,
                 http_options=types.HttpOptions(
                     timeout=int(settings.timeout_seconds * 1000),
-                    retry_options=types.HttpRetryOptions(attempts=1),
+                    retry_options=types.HttpRetryOptions(
+                        attempts=3,
+                        initial_delay=0.5,
+                        max_delay=8.0,
+                        http_status_codes=[408, 429, 500, 502, 503, 504],
+                    ),
                 ),
             )
         except Exception:
