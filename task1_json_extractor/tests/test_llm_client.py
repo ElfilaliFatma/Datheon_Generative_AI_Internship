@@ -218,3 +218,44 @@ def test_gemini_timeout_error_is_translated(
             user_prompt="Document",
             response_model=ResumeExtraction,
         )
+
+
+def test_gemini_retired_model_error_includes_google_hint(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from exceptions import LLMRequestError
+    from google.genai import errors
+
+    client = GeminiClient(_settings("gemini"))
+
+    def fake_generate_content(**kwargs: Any) -> None:
+        raise errors.APIError(
+            404,
+            {
+                "error": {
+                    "code": 404,
+                    "message": (
+                        "This model models/gemini-2.5-flash is no longer "
+                        "available to new users. Please update your code to "
+                        "use models/gemini-3.8-flash."
+                    ),
+                    "status": "NOT_FOUND",
+                }
+            },
+        )
+
+    monkeypatch.setattr(
+        client._client.models, "generate_content", fake_generate_content
+    )
+
+    with pytest.raises(LLMRequestError) as excinfo:
+        client.generate_json(
+            system_prompt="System",
+            user_prompt="Document",
+            response_model=ResumeExtraction,
+        )
+
+    message = str(excinfo.value)
+    assert "no longer available" in message
+    assert "gemini-3.8-flash" in message
+    assert "sk-secret" not in message

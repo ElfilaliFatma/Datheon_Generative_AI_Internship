@@ -50,7 +50,7 @@ def test_gemini_requires_only_gemini_key(monkeypatch: pytest.MonkeyPatch) -> Non
     settings = Settings.from_env()
 
     assert settings.provider == "gemini"
-    assert settings.model == "gemini-2.5-flash"
+    assert settings.model == "gemini-3.6-flash"
     assert settings.api_key == "fake-gemini-key"
 
 

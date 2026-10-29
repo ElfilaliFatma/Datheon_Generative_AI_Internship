@@ -142,7 +142,7 @@ Gemini:
 ```dotenv
 LLM_PROVIDER=gemini
 GEMINI_API_KEY=your_gemini_api_key_here
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.6-flash
 ```
 
 OpenAI:
@@ -275,7 +275,7 @@ JSON only when no `--output` path is supplied; with `--output`, the validated
 JSON is written to the file instead:
 
 ```text
-Extraction succeeded (gemini, model=gemini-2.5-flash, attempts=1).
+Extraction succeeded (gemini, model=gemini-3.6-flash, attempts=1).
 Summary: invoice: line_items=3, total=323.88, currency=GBP
 
 {

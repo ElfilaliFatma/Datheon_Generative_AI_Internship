@@ -257,9 +257,10 @@ def _raise_gemini_error(exc: Exception, *, timeout_seconds: float) -> None:
                 "The Gemini request timed out. Try again later."
             ) from None
         if code in {400, 404, 422}:
+            detail = _gemini_model_hint(exc)
             raise LLMRequestError(
-                f"Gemini rejected the request (HTTP {code}). Check the "
-                "selected model and structured-output support."
+                f"Gemini rejected the request (HTTP {code}). {detail} "
+                "Check the model name and that it supports structured output."
             ) from None
         if code and code >= 500:
             raise LLMProviderResponseError(
@@ -278,6 +279,22 @@ def _raise_gemini_error(exc: Exception, *, timeout_seconds: float) -> None:
     raise LLMProviderResponseError(
         "The Gemini request failed due to an unexpected client error."
     ) from None
+
+
+def _gemini_model_hint(exc: Exception) -> str:
+    """Extract a short, safe hint from a Gemini 404/400 error message.
+
+    Google's error text is a short explanation (for example, a retired model
+    name), so echoing it helps the user without exposing the credential or the
+    document.
+    """
+    message = getattr(exc, "message", None)
+    if not isinstance(message, str):
+        return ""
+    hint = " ".join(message.split())
+    if len(hint) > 240:
+        hint = hint[:237].rstrip() + "..."
+    return f"{hint} " if hint else ""
 
 
 def _raise_openai_error(exc: Exception, openai_module: object) -> None:
