@@ -1,0 +1,6 @@
+# Normalize line endings so the project behaves the same on Windows, Linux, and macOS.
+* text=auto eol=lf
+
+# Windows batch and PowerShell scripts, if added later, keep their native line endings.
+*.ps1 text eol=crlf
+*.bat text eol=crlf

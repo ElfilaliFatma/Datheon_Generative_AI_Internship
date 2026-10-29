@@ -1,0 +1,34 @@
+{
+  "$comment": "Illustrative validated result for examples/sample_invoice.txt. Numeric values are JSON numbers, not strings. This is a schema/example reference and is not a live API response.",
+  "invoice_number": "EOS-2025-0042",
+  "invoice_date": "2025-03-14",
+  "due_date": "2025-04-13",
+  "currency": "GBP",
+  "supplier_name": "Evergreen Office Supplies Ltd",
+  "supplier_address": "Unit 4, 18 Harbour Road, Bristol BS1 4XY, United Kingdom",
+  "customer_name": "Harbourview Design Studio",
+  "subtotal": 269.9,
+  "tax_amount": 53.98,
+  "total_amount": 323.88,
+  "line_items": [
+    {
+      "description": "Recycled A4 paper (box of 5 reams)",
+      "quantity": 4,
+      "unit_price": 24.5,
+      "line_total": 98.0
+    },
+    {
+      "description": "Black gel pens (pack of 10)",
+      "quantity": 6,
+      "unit_price": 8.25,
+      "line_total": 49.5
+    },
+    {
+      "description": "Ergonomic keyboard",
+      "quantity": 2,
+      "unit_price": 61.2,
+      "line_total": 122.4
+    }
+  ],
+  "payment_terms": "Net 30. Pay by bank transfer quoting the invoice number."
+}

@@ -1,0 +1,86 @@
+{
+  "$comment": "Illustrative validated result for examples/sample_resume.txt. Values shown as null or [] were absent from the sample. This is a schema/example reference and is not a live API response.",
+  "full_name": "Jordan A. Rivera",
+  "email": "jordan.rivera@example.com",
+  "phone": "+1 (555) 014-7788",
+  "professional_summary": "Backend engineer with 6 years of experience building reliable payment and data platforms. Comfortable leading small teams and translating ambiguous product requirements into maintainable services.",
+  "education": [
+    {
+      "institution": "University of Texas at Austin",
+      "degree": "Bachelor of Science",
+      "field_of_study": "Computer Science",
+      "start_date": "Aug 2015",
+      "end_date": "May 2019",
+      "location": "Austin, TX",
+      "grade": "3.7/4.0"
+    }
+  ],
+  "technical_skills": [
+    "Python",
+    "Go",
+    "PostgreSQL",
+    "Redis",
+    "Docker",
+    "Kubernetes",
+    "AWS",
+    "Terraform",
+    "REST APIs",
+    "gRPC",
+    "pytest"
+  ],
+  "soft_skills": [
+    "Technical mentoring",
+    "cross-team communication",
+    "incident response"
+  ],
+  "work_experience": [
+    {
+      "job_title": "Senior Software Engineer",
+      "company": "Northstar Payments",
+      "location": "Austin, TX",
+      "start_date": "Jan 2022",
+      "end_date": null,
+      "description": null,
+      "highlights": [
+        "Led the migration of the settlement service from a monolith to three Go services, reducing p95 latency by 38%.",
+        "Introduced contract tests and schema validation for partner integrations.",
+        "Mentored four engineers and ran the team's weekly design review."
+      ]
+    },
+    {
+      "job_title": "Software Engineer",
+      "company": "Bluewave Analytics",
+      "location": "Remote",
+      "start_date": "Jun 2019",
+      "end_date": "Dec 2021",
+      "description": null,
+      "highlights": [
+        "Built a Python ingestion pipeline processing roughly 12 million events per day.",
+        "Automated infrastructure provisioning with Terraform and GitHub Actions."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Ledger Lens",
+      "description": "An open-source reconciliation tool that compares ledgers across payment providers.",
+      "technologies": ["Python", "FastAPI", "PostgreSQL"],
+      "url": "https://github.com/example/ledger-lens",
+      "highlights": []
+    }
+  ],
+  "certifications": [
+    "AWS Certified Solutions Architect - Associate",
+    "Certified Kubernetes Application Developer (CKAD)"
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "proficiency": "Native"
+    },
+    {
+      "language": "Spanish",
+      "proficiency": "Professional working proficiency"
+    }
+  ]
+}
